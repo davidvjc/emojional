@@ -1,0 +1,755 @@
+
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>Emojional</title>
+
+    <script type="text/javascript" src="cordova.js"></script>
+        <script src="js/jquery-2.1.3.js"></script>
+        <script src="js/jquery.mobile-1.4.5.js"></script>
+        <script src="js/index.js"></script>
+        <meta charset="utf-8" />
+        <link rel="stylesheet" href="css/jquery.mobile-1.4.5.css" />
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+        <link rel="stylesheet" type="text/css" href="css/index.css" />
+
+<script src="http://cdn.jsdelivr.net/parse/1.2.9/parse.min.js"></script>
+
+        <style>
+         h1{
+                color:white;
+                text-transform: none;
+                font-size: 30px;
+                }
+
+            #main-page, #user-page {
+                background-color: #4a88cd;
+                color:black;
+                text-transform: none;
+                }
+
+                body{
+                font-family:'HelveticaNeue-Light', 'HelveticaNeue', Helvetica, Arial, sans-serif;
+                font-size:25px;
+                }
+            /* STYLE OF MY EMOJI //// TOP HALF OF SCREEN */
+            #emoji-mine{
+                font-family:'HelveticaNeue-Light', 'HelveticaNeue', Helvetica, Arial, sans-serif;
+                font-size:25px;
+                width: auto;
+                padding-top:20%;
+                padding-bottom: 24%;
+                display: block;
+                margin: 0 auto;
+                background-color: #2761a3;
+                text-align: center;
+                }
+
+            /* STYLE OF ROOM AVERAGE ////BOTTOM HALF OF SCREEN*/
+            #emoji-average {
+                font-family:'HelveticaNeue-Light', 'HelveticaNeue', Helvetica, Arial, sans-serif;
+                font-size:20px;
+                width: auto;
+                padding: 25%;
+                display: block; margin: 0 auto;
+                background-color:#2761a3;
+                background-image: url("img/roundBack.png");
+                background-size: 100% 100%;
+                background-repeat: no-repeat;
+                background-position: bottom;
+                text-align: center;
+                }
+
+
+            /*STYLE OF LIST OF EMOJIS TO CHOOSE EMOJI FROM //// MIDDLE ROW*/
+            #emoji-list{
+                font-size:4em;
+                width:auto;
+                padding-top: 5%;
+                padding-bottom:5%;
+                overflow-x:auto;
+                white-space: nowrap;
+                display: none;
+                margin: 0 auto;
+                text-align: center;
+                position: relative;
+                background: #ffffff;
+                }
+
+                #userManagement{
+
+                    padding:4%;
+                }
+
+                #status{
+                    width: 100%;
+                    height: 15%;
+                }
+
+                #pref, #back{
+                    position: absolute;
+                    margin:0;
+                    margin-top: -72px;
+                    right:0;
+                }
+                .signup-form{
+                }
+                #swipe-nav, #swipe-nav2{
+                    width: 100%;
+                    height:50px;
+                    position: absolute;
+                    bottom: 0;
+                    background-color: #4a88cd;
+                }
+
+
+                @keyframes arrows {
+                0%   {padding-left:0;}
+                40%   {padding-left:30px;}
+                100%   {padding-left:0;}
+                }
+                @-moz-keyframes arrows {
+                    0%   {padding-left:0;}
+                40%   {padding-left:30px;}
+                100%   {padding-left:0;}
+                }
+                @-webkit-keyframes arrows {
+                    0%   {padding-left:0;}
+                40%   {padding-left:30px;}
+                100%   {padding-left:0;}
+                }
+                .arrow, .arrowl{
+                    width: 30px;
+                    height: 30px;
+                    display: block;
+                    margin-left: auto;
+                    margin-right: auto;  
+                    animation: arrows 3s linear 1s infinite alternate;    
+                    -webkit-animation: arrows 3s linear 1s infinite alternate; 
+                    -moz-animation: arrows 3s linear 1s infinite alternate; 
+                }
+
+        </style>
+    </head>
+    <body>
+
+
+
+<body id="body-id">
+
+<!-- MAIN PAGE -->
+        <div data-role="page" class="page" id="main-page">
+
+        <!-- HEADER -->
+            <div data-role="header" data-id="head1" data-position="fixed" data-theme="a" data-tap-toggle="false" style="text-shadow:none;padding-top:3%; padding-bottom:3%; background-color: #142e4c; border-style:none;font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;">
+
+                <h1>Emojional</h1>
+
+<!--                 <img src="img/o.png" id="back"></img>
+ -->
+            </div>
+<!--             <div data-role="navbar">
+              <ul>
+                <li><a href="#" class="ui-btn-active ">Home</a></li>
+                <li><a href="#user-page">User</a></li>
+              </ul>
+            </div> -->
+
+
+        <!-- CONTENT -->
+            <div role="main" class="ui-content" style="padding:0;margin:0;background-color: #759FF0;text-shadow:none; font-family: sans-serif-thin; font-style: normal">
+
+
+                <!-- CONTAINER FOR WORD 'ME' -->
+                <div id="emoji-mine">Me<br>
+
+                    <!-- CONTAINER FOR MY MOOD ACTUAL EMOJI -->
+                    <div id="mine-inner" style="padding:0;margin:0;font-size:42px">&#x1f60a</div>
+
+                </div>
+
+                <!-- LIST OF EMOJIS TO PICK FROM -->
+                <div id="emoji-list">
+
+                </div>
+
+                <!-- CONTAINER FOR HOW MANY PEOPLE 'IN ROOM' -->
+                <div id="emoji-average"><br>
+                    <div id="result-counter"></div>
+                    <!-- CONTAINER FOR ROOM AVERAGE ACTUAL EMOJI -->
+                    <div id="average-inner" style="padding:0;margin:0;font-size:42px"></div>
+
+                </div>
+                            </div>
+
+                <div id="swipe-nav"><img class="arrow" src="img/arrow.png"></div>
+
+</div>
+
+
+
+<!-- USER PAGE -->
+        <div data-role="page" class="page" id="user-page">
+
+        <!-- HEADER -->
+            <div data-role="header" data-id="head1" data-position="fixed" data-theme="a" data-tap-toggle="false" style="text-shadow:none;padding-top:3%; padding-bottom:3%; background-color: #142e4c; border-style:none;font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;">
+
+                <h1>Emojional</h1>
+<!--                 <img src="img/x.png" id="pref"></img>
+ -->
+            </div>
+
+  <!--           <div data-role="navbar">
+                  <ul>
+                    <li><a href="#main-page">Home</a></li>
+                    <li><a href="#" class="ui-btn-active">User</a></li>
+                  </ul>
+                </div> -->
+
+        <!-- CONTENT -->
+            <div id="userManagement">
+
+            <div id="status"></div>
+            <br>
+
+              <h1>Username</h1><input type="text" id="username" name="username" size="15" /><br />
+
+                    <form class="login-form">
+            <div align="center">
+                <p><input type="submit" value="Login" /></p>
+              </div>
+            </form>
+                    <form class="signup-form">
+            <div align="center">
+                <p><input type="submit" value="Signup" /></p>
+              </div>
+            </form>
+            <button id="logout">Log Out</button>
+                                        </div>
+            <div id="swipe-nav2"><img class="arrowl" src="img/arrowl.png"></div>
+
+
+</div>
+
+
+<script type="text/javascript">
+
+//   ---------------- Initialisation ----------------------
+
+            Parse.initialize("Key", "Key");
+
+
+            //Parse initialize the object to use
+            var LocationUpdate = Parse.Object.extend("LocationUpdate");
+            var LocationUpdate = new LocationUpdate();
+            
+            //declare variables
+            var loc, lat, lon, className, sameUser, newMood, averageMood, rawMood;
+
+                //call the get location
+                getLocation();
+
+            //Prase user management
+            var currentUser = Parse.User.current();
+
+            var password = "password";
+
+            var currentRoomMood = [];
+
+
+//-------------------   User Management     ------------------------
+
+    if (currentUser) {
+        // if the user has not logged out go to home page
+        var sameUser = currentUser.attributes.username;
+        console.log('still the same user called ' + sameUser);
+        $.mobile.navigate( "#main-page" );
+
+    } else {
+        $.mobile.navigate( "#user-page" );
+                $(".signup-form").submit (function(event) {
+                            event.preventDefault();
+                            var user = new Parse.User();
+
+                            //use the same password for everybody - one variable for both signup and login
+
+                            //get the form values from the html
+                            var s_username = $('#username').val();
+                            // var s_password = "davidmarc";
+
+                            // SIGNUP: new user to Parse
+                            user.set("username", s_username);
+                            user.set("password", password);
+
+                            // how does this work (???)
+                            user.signUp(null, {
+                                success: function(user) {
+                                console.log("new signup, username: " + username + " password: " + password);
+                                $("#status").css("background-color", "#7BFD79");
+                                $("#status").html("Success! Welcome");
+                                $.mobile.navigate( "#main-page" );
+
+                                    },
+                                error: function(user, error) {
+                                    // Show the error message somewhere and let the user try again. (!!!)
+                                    alert("Error: " + error.code + " " + error.message);
+                                   $("#status").css("background-color", "#FD234E");
+                                    $("#status").html(error);
+                                }
+                            });
+                        });
+
+                $(".login-form").submit (function(event) {
+                            event.preventDefault();
+
+                            //get the form values from the html
+                            var username = $('#username').val();
+                            // var password = "davidmarc";
+
+                            // LOGIN: using the form input
+                            Parse.User.logIn(username, password, {
+                                success: function(user) {
+                                    // Go to home page (!!!)
+                                console.log("new login, username: " + username + " password: " + password);
+                                $("#status").css("background-color", "#7BFD79");
+                                $("#status").html("Welcome Back");
+                                $.mobile.navigate( "#main-page" );
+
+                                },
+                                error: function(user, error) {
+                                    // The login failed. Check error to see why.
+                                    //post the error to the login page (!!!)
+                                    console.log(error);
+                                    $("#status").css("background-color", "#FD234E");
+                                    $("#status").html(error);
+                                }
+                            });
+
+                        });
+
+        }
+
+        //logout function
+        $("#logout").click(function(){
+        Parse.User.logOut();
+        console.log('a user was logged out');
+        $("#status").html("Successfully logged out");
+
+        });
+
+
+// --------------  Get Location -------------------------
+
+                //phonegap: post my location and emoji mood upon submit
+                    //still need to code a way to launch get Location on the click of an emoji
+                function getLocation(){
+                    console.log('at get location');
+                navigator.geolocation.getCurrentPosition(showPosition, locationError);
+                }
+
+                function showPosition(position) {
+                    console.log('at show position');
+                   lat = position.coords.latitude.toFixed(3);;
+                   lon = position.coords.longitude.toFixed(3);; 
+                   loc = {lat: lat, lon: lon};
+                   console.log("lat: " + lat + "  lon: " + lon);
+                }
+
+                function locationError(error){
+                    console.log(error);
+                }
+
+
+// -------------------------------- Emoji Parsing ------------------------------
+//marcs javascript
+
+var myMood = [],
+    emptiedEmojis = false,
+    emojis = ['&#x1f600',
+                        '&#x1f601',
+                        '&#x1f602',
+                        '&#x1f603',
+                        '&#x1f604',
+                        '&#x1f605',
+                        '&#x1f606',
+                        '&#x1f607',
+                        '&#x1f608',
+                        '&#x1f609',
+                        '&#x1f60a',
+                        '&#x1f60b',
+                        '&#x1f60c',
+                        '&#x1f60d', 
+                        '&#x1f60e', 
+                        '&#x1f60f',
+                        '&#x1f610', 
+                        '&#x1f611',
+                        '&#x1f612', 
+                        '&#x1f613', 
+                        '&#x1f614',
+                        '&#x1f615', 
+                        '&#x1f616',
+                        '&#x1f617',
+                        '&#x1f618',
+                        '&#x1f619',
+                        '&#x1f61a',
+                        '&#x1f61b',
+                        '&#x1f61c',
+                        '&#x1f61d',
+                        '&#x1f61e',
+                        '&#x1f61f',
+                        '&#x1f620',
+                        '&#x1f621',
+                        '&#x1f622',
+                        '&#x1f623',
+                        '&#x1f624',
+                        '&#x1f625',
+                        '&#x1f626',
+                        '&#x1f627',
+                        '&#x1f628',
+                        '&#x1f629',
+                        '&#x1f62a',
+                        '&#x1f62b',
+                        '&#x1f62c',
+                        '&#x1f62d',
+                        '&#x1f62e',
+                        '&#x1f62f',
+                        '&#x1f630',
+                        '&#x1f631',
+                        '&#x1f632',
+                        '&#x1f633',
+                        '&#x1f634',
+                        '&#x1f635',
+                        '&#x1f636',
+                        '&#x1f637']                       
+
+      var myMood = [];
+    for (var i = 0; i < emojis.length; i++){
+            var elt = $('<span>' + emojis[i] + '</span>');
+            elt.attr('id', 'e' + i + '');
+            elt.attr('class', 'emoji');
+            elt.html(emojis[i]);
+        $('#emoji-list').append(elt);
+    }
+
+        //FILL EMOJI LIST WITH INTERACTIVE EMOJIS
+    for (var i = 0; i < emojis.length; i++) {
+        var elt = $('<span>' + emojis[i] + '</span>');
+        elt.attr('id', 'e' + i + '');
+        elt.attr('class', 'emoji');
+        elt.html(emojis[i]);
+        $('#emoji-list').append(elt);
+    };
+
+//------------------------ UI/UX -------------------------------
+
+//ADD EVENT LISTENER TO PUSH A LIMIT OF 5 EMOJIS INTO myMood ARRAY AND INTO HTML
+    $('.emoji').click(function() {
+        console.log($(this).text());
+
+        if (!emptiedEmojis) {
+            $('#mine-inner').html('');
+            myMood = [];
+            emptiedEmojis = true;
+        };
+
+        if (myMood.length < 5) {
+            myMood.push($(this).text());
+            $('#mine-inner').append($(this).text());
+        };
+
+    });
+
+        //ADD EVENTLISTENER TO ANIMATE ON TAP GESTURE TO REVEAL EMOJI LIST
+    $('#emoji-mine, #emoji-average').click(function() {
+
+        if ($('#emoji-list').is(':hidden')) {
+            $(' #emoji-list').animate({
+                scrollLeft: '+=360'
+            }, {
+                duration: 500,
+                queue: false
+            });
+
+            $('#emoji-list').slideDown('slow');
+            emptiedEmojis = false;
+        } else {
+            $('#emoji-list').slideUp('slow');
+            sendLocation(myMood);
+            roomMood();
+            console.log(myMood + " was captured");
+        };
+
+    });
+
+        //MAKE IT SO YOU CANT DRAG THE PAGE WITH SLIDE GESTURE
+    $('#emoji-mine, #emoji-average').on('touchmove', function(evt) {
+        evt.preventDefault();
+    });
+
+    //ADD SLIDE UP AND SLIDE DOWN GESTURE EVENTLISTENERS TO JQUERY LIBRARY //////IGNORE TIL THE NEXT COMMENT
+    var supportTouch = $.support.touch,
+        scrollEvent = "touchmove scroll",
+        touchStartEvent = supportTouch ? "touchstart" : "mousedown",
+        touchStopEvent = supportTouch ? "touchend" : "mouseup",
+        touchMoveEvent = supportTouch ? "touchmove" : "mousemove";
+    $.event.special.swipeupdown = {
+        setup: function() {
+            var thisObject = this;
+            var $this = $(thisObject);
+            $this.bind(touchStartEvent, function(event) {
+                var data = event.originalEvent.touches ?
+                    event.originalEvent.touches[0] :
+                    event,
+                    start = {
+                        time: (new Date).getTime(),
+                        coords: [data.pageX, data.pageY],
+                        origin: $(event.target)
+                    },
+                    stop;
+
+                function moveHandler(event) {
+                    if (!start) {
+                        return;
+                    }
+                    var data = event.originalEvent.touches ?
+                        event.originalEvent.touches[0] :
+                        event;
+                    stop = {
+                        time: (new Date).getTime(),
+                        coords: [data.pageX, data.pageY]
+                    };
+
+                    if (Math.abs(start.coords[1] - stop.coords[1]) > 10) {
+                        event.preventDefault();
+                    }
+                }
+                $this
+                    .bind(touchMoveEvent, moveHandler)
+                    .one(touchStopEvent, function(event) {
+                        $this.unbind(touchMoveEvent, moveHandler);
+                        if (start && stop) {
+                            if (stop.time - start.time < 1000 &&
+                                Math.abs(start.coords[1] - stop.coords[1]) > 30 &&
+                                Math.abs(start.coords[0] - stop.coords[0]) < 75) {
+                                start.origin
+                                    .trigger("swipeupdown")
+                                    .trigger(start.coords[1] > stop.coords[1] ? "swipeup" : "swipedown");
+                            }
+                        }
+                        start = stop = undefined;
+                    });
+            });
+        }
+    };
+    $.each({
+        swipedown: "swipeupdown",
+        swipeup: "swipeupdown"
+    }, function(event, sourceEvent) {
+        $.event.special[event] = {
+            setup: function() {
+                $(this).bind(sourceEvent, $.noop);
+            }
+        };
+    });
+
+
+    //ADD SWIPEDOWN EVENTLISTENER FOR ANIMATION TO REVEAL EMOJIS LIST //////ALTERNATIVE TO TAP GESTURE
+    $('#emoji-average').on('swipedown', function() {
+        if ($('#emoji-list').is(':hidden')) {
+            $(' #emoji-list').animate({
+                scrollLeft: '+=160'
+            }, {
+                duration: 1000,
+                queue: false
+            });
+
+            $('#emoji-list').slideDown('slow');
+            emptiedEmojis = false;
+        };
+    });
+
+    //ADD SWIPEUP EVENTLISTENER FOR ANIMATION TO REVEAL EMOJIS LIST //////ALTERNATIVE TO TAP GESTURE
+    $('#emoji-average').on('swipeup', function() {
+        if ($('#emoji-list').is(':visible')) {
+            $('#emoji-list').slideUp('slow');
+        };
+    });
+
+        $("#swipe-nav").on('swiperight', function(event) {
+            $.mobile.navigate( "#user-page" );
+            console.log('swipe right');
+});
+    $("#swipe-nav2").on('swipeleft', function(event) {
+            $.mobile.navigate( "#main-page" );
+            console.log('swipe left');
+});
+
+    // $("#pref").click(function(){
+    //     $.mobile.navigate( "#user-page" );
+    // });
+    // $("#back").click(function(){
+    //     $.mobile.navigate( "#main-page" );
+    // });
+
+// -----------------  Send it to server with location ------------------
+
+                //sending location and emoji to the server when I update my location
+                function sendLocation(myMood){
+                    console.log('at send location');
+                    //create a relationship between the current user and the location in the database
+                    LocationUpdate.set("parent", currentUser);
+
+                    LocationUpdate.set({
+                        geolocation: loc,
+                        myMood: myMood
+                    }, {
+                      success: function(LocationUpdate) {
+                        // The object was saved successfully.
+                        console.log('your location was logged as ' + loc + "with a mood of " + myMood);
+                        //call the room mood query at the same time
+                        
+                      },
+                      error: function(LocationUpdate, error) {
+                        // The save failed.
+                        // error is a Parse.Error with an error code and message.
+                        console.log('there was an error  ' + error);
+                      }
+                    });
+
+                    //the parse funciton to save
+                    LocationUpdate.save();
+
+                }
+
+
+                    var x1f600 = 0;
+                    var x1f601 = 0;
+                    var x1f602 = 0;
+                    var x1f603 = 0;
+                    var x1f604 = 0;
+                    var x1f605 = 0;
+                    var x1f637 = 0;
+
+
+var moods = {
+    mood0: "&#x1f600", 
+    mood1: "&#x1f601", 
+    mood2: "&#x1f602", 
+    mood3: "&#x1f603", 
+    mood4: "&#x1f604"
+};
+
+// ------------------- Query to Server -------------------------
+
+            //define the query to the server
+            var locations = Parse.Object.extend("LocationUpdate");
+            var query = new Parse.Query(locations);
+            var postDate, d, cutDate;
+
+        // add a timeframe to what data I am asking for!!! - your emotion expires every day
+            function roomMood(){
+                query.equalTo("geolocation", loc);
+
+                query.find({
+                  success: function(results) {
+
+                    d = new Date();
+
+                    console.log("Successfully retrieved " + results.length + " updates at lat: " + lat + "   lon: " + lon);
+
+                    $("#result-counter").html(results.length + " moods found");
+
+                    // Do something with the returned Parse.Object values
+                    for (var i = 0; i < results.length; i++) { 
+                      // console.log(results[i]);
+                      // console.log( 'lat: ' + results[i].attributes.geolocation.lat + ' user: ' +
+                      // results[i].attributes.parent.id + " with a mood of " + results[i].attributes.myMood + " at time: " + results[i].createdAt);
+
+                      //see if the timestampt matches the current day
+                      postDate = results[i].createdAt;
+                      if (postDate = d){
+                        console.log('same date!');
+                        }
+
+
+                    currentRoomMood.push(results[i].attributes.myMood.join(" "));
+
+
+                          if(results[i].attributes.myMood.toString() == moods.mood0){
+                            x1f600++;
+                            console.log("x1f600: " + x1f600);
+                          }                        
+
+                          else if(results[i].attributes.myMood == moods.mood1){
+                            x1f601++;
+                            console.log("x1f601: " + x1f601);
+                          }
+
+                          else if(results[i].attributes.myMood == moods.mood2){
+                            x1f602++;
+                            console.log("x1f602: " + x1f602);
+                          }
+
+                         else if(results[i].attributes.myMood == moods.mood3){
+                            x1f603++;
+                            console.log(x1f603);
+                          }
+
+                          else if(results[i].attributes.myMood == moods.mood4){
+                            x1f604++;
+                            console.log(x1f604);
+                          }
+ 
+                }
+
+                    console.log("mood from server is in the new array is: " + currentRoomMood);
+
+                    //post the new mood into the Room div
+                    // $("#emoji-mine").html(orderByOccurrence(currentRoomMood.join("")));
+                    $("#average-inner").html(currentRoomMood.join(" ").slice(0,36));
+
+                  },
+                  error: function(error) {
+                  }
+                });
+            };
+
+userHistory();
+
+
+// ------------------- Query for user data -------------------------
+
+            //define the query to the server
+            var userDate = Parse.Object.extend("LocationUpdate");
+            var queryUser = new Parse.Query(locations);
+            var userMoods = [];
+
+        // add a timeframe to what data I am asking for!!! - your emotion expires every day
+            function userHistory(){
+                            var userNow = Parse.User.current().id;
+
+                query.equalTo("parent", userNow);
+
+                query.find({
+                  success: function(results) {
+                        for (var i = 0; i < results.length; i++) { 
+                           userMoods.push(results[i].attributes.myMood.join(" "));
+
+                    $("#status").html(userMoods);
+
+                        }
+
+                    },
+                  error: function(error) {
+                    console.log(error);
+                  }
+
+
+            });
+            }
+    
+</script>
+    </body>
+</html>
